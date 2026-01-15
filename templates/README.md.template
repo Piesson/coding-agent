@@ -1,0 +1,51 @@
+# {{PROJECT_NAME}}
+
+[프로젝트 한 줄 설명]
+
+## Features
+
+- [기능 1]
+- [기능 2]
+- [기능 3]
+
+## Quick Start
+
+```bash
+cd ~/Desktop/{{PROJECT_NAME}}
+claude
+```
+
+## Usage
+
+### 기본 사용법
+
+```bash
+# 예시 명령어
+[사용법 작성]
+```
+
+## Project Structure
+
+```
+{{PROJECT_NAME}}/
+├── CLAUDE.md          # 프로젝트 컨텍스트
+├── README.md          # 이 파일
+└── .claude/
+    └── settings.json  # 프로젝트 설정
+```
+
+## Configuration
+
+[설정 방법 설명]
+
+## Development
+
+```bash
+# 개발 환경 설정
+[개발 환경 설정 명령어]
+```
+
+## Changelog
+
+### {{DATE}}
+- Initial setup

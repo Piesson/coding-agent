@@ -1,0 +1,49 @@
+# {{PROJECT_NAME}}
+
+## Core Identity
+
+- **프로젝트 목적**: [작성 필요]
+- **핵심 기능**: [작성 필요]
+- **타입**: [자동화 에이전트 / CLI 툴 / Slack 봇]
+
+---
+
+## Platonic Clarification Protocol
+
+모든 작업 전 필수 평가:
+1. **명시적 작성**: "질문 필요 여부: YES/NO"
+2. YES인 경우 1-3개 질문 후 진행
+3. 범위/깊이/컨텍스트 확인
+
+---
+
+## Commands
+
+| 명령어 | 설명 |
+|--------|------|
+| [작성 필요] | [작성 필요] |
+
+---
+
+## Project Structure
+
+```
+{{PROJECT_NAME}}/
+├── CLAUDE.md          # 이 파일
+├── README.md          # 프로젝트 설명
+└── .claude/
+    └── settings.json  # 프로젝트 설정
+```
+
+---
+
+## Notes
+
+- [프로젝트 특이사항, 패턴, 주의사항]
+
+---
+
+## Change Log
+
+### {{DATE}}
+- Initial setup: {{PROJECT_NAME}} 프로젝트 생성
