@@ -58,3 +58,6 @@ coding-agent/
 
 ### 2026-01-15
 - Initial setup: coding-agent 프로젝트 생성
+- Phase 2: 범용 피드백 루프 시스템 추가
+  - `run-verification.sh`: 프로젝트 타입 자동 감지 및 검증
+  - `~/.claude/pending-fixes.md`: 실패 시 오류 로깅 → 다음 세션에서 자동 수정

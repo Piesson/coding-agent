@@ -53,12 +53,26 @@ coding-agent/
 - README.md 기능 문서화
 - Git commit + push
 
-### Stop Hook
-- Claude 작업 완료 시 실행
-- Playwright 테스트 자동 실행
-- 테스트 파일 없으면 MCP로 브라우저 확인
+### Stop Hook - 범용 피드백 루프
+- Claude 작업 완료 시 `run-verification.sh` 실행
+- 프로젝트 타입 자동 감지 (Node.js, Python, Rust, Go, Make, Shell)
+- 타입별 검증 실행 (빌드, 테스트, 린트, 타입체크)
+- 실패 시 `~/.claude/pending-fixes.md`에 오류 기록
+- 다음 세션에서 Claude가 자동 수정 시도
+
+### 지원하는 프로젝트 타입
+
+| 타입 | 감지 파일 | 검증 명령 |
+|------|----------|----------|
+| Node.js | package.json | npm build/test/lint |
+| Python | pytest.ini, pyproject.toml | pytest, mypy |
+| Rust | Cargo.toml | cargo check/test |
+| Go | go.mod | go build/test |
+| Make | Makefile | make build/test |
+| Shell | *.sh | shellcheck, bash -n |
 
 ## Changelog
 
 ### 2026-01-15
 - Initial setup
+- Phase 2: 범용 피드백 루프 시스템 추가
