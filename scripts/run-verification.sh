@@ -16,12 +16,23 @@ detect_project_type() {
         return
     fi
 
-    # Python 프로젝트
-    if [ -f "pytest.ini" ] || [ -f "pyproject.toml" ] || [ -f "setup.py" ]; then
+    # Python 프로젝트 (다양한 경우 감지)
+    if [ -f "pytest.ini" ] || [ -f "pyproject.toml" ] || [ -f "setup.py" ] || [ -f "requirements.txt" ]; then
         echo "python"
         return
     fi
+    # tests/ 폴더에 Python 테스트가 있는 경우
     if [ -d "tests" ] && ls tests/*.py 2>/dev/null >&2; then
+        echo "python"
+        return
+    fi
+    # agent/, src/, lib/ 등 하위 폴더에 Python 파일이 있는 경우
+    if ls agent/*.py src/*.py lib/*.py 2>/dev/null >&2; then
+        echo "python"
+        return
+    fi
+    # 루트에 main.py 또는 app.py가 있는 경우
+    if [ -f "main.py" ] || [ -f "app.py" ]; then
         echo "python"
         return
     fi
@@ -44,7 +55,7 @@ detect_project_type() {
         return
     fi
 
-    # Shell 스크립트 프로젝트 (주로 에이전트)
+    # Shell 스크립트 프로젝트 (마지막으로 확인)
     if ls *.sh 2>/dev/null >&2 || ls scripts/*.sh 2>/dev/null >&2; then
         echo "shell"
         return
