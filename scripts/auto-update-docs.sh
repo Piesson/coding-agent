@@ -59,22 +59,59 @@ FILENAME=$(basename "$FILE_PATH")
 
 # CLAUDE.md Change Log 업데이트
 if [ -f "CLAUDE.md" ]; then
-    # Change Log 섹션이 있는지 확인
-    if grep -q "## Change Log" CLAUDE.md; then
-        # 오늘 날짜 항목이 이미 있는지 확인
-        if ! grep -q "### $DATE" CLAUDE.md; then
-            # 새 날짜 섹션 추가
-            sed -i '' "/## Change Log/a\\
+    # Change Log 섹션이 없으면 자동 생성
+    if ! grep -q "## Change Log" CLAUDE.md; then
+        echo "" >> CLAUDE.md
+        echo "## Change Log" >> CLAUDE.md
+        echo "" >> CLAUDE.md
+    fi
+
+    # 오늘 날짜 항목이 이미 있는지 확인
+    if ! grep -q "### $DATE" CLAUDE.md; then
+        # 새 날짜 섹션 추가
+        sed -i '' "/## Change Log/a\\
 ### $DATE\\
 " CLAUDE.md 2>/dev/null || true
-        fi
+    fi
 
-        # 파일 변경 항목 추가 (중복 방지)
-        if ! grep -q "- \[$FILENAME\]" CLAUDE.md; then
-            sed -i '' "/### $DATE/a\\
+    # 파일 변경 항목 추가 (중복 방지)
+    if ! grep -q "- \[$FILENAME\]" CLAUDE.md; then
+        sed -i '' "/### $DATE/a\\
 - [$FILENAME]: Updated\\
 " CLAUDE.md 2>/dev/null || true
+    fi
+fi
+
+# README.md Recent Changes 섹션 업데이트
+if [ -f "README.md" ]; then
+    # "## Recent Changes" 또는 "## Changelog" 섹션이 없으면 자동 생성
+    if ! grep -q "## Recent Changes\|## Changelog" README.md; then
+        echo "" >> README.md
+        echo "## Recent Changes" >> README.md
+        echo "" >> README.md
+    fi
+
+    # 오늘 날짜 항목이 이미 있는지 확인
+    if ! grep -q "### $DATE" README.md; then
+        # 새 날짜 섹션 추가 (Recent Changes 또는 Changelog 뒤에)
+        if grep -q "## Recent Changes" README.md; then
+            sed -i '' "/## Recent Changes/a\\
+\\
+### $DATE\\
+" README.md 2>/dev/null || true
+        elif grep -q "## Changelog" README.md; then
+            sed -i '' "/## Changelog/a\\
+\\
+### $DATE\\
+" README.md 2>/dev/null || true
         fi
+    fi
+
+    # 파일 변경 항목 추가 (중복 방지)
+    if ! grep -q "- \`$FILENAME\`" README.md; then
+        sed -i '' "/### $DATE/a\\
+- \`$FILENAME\`: Updated\\
+" README.md 2>/dev/null || true
     fi
 fi
 
