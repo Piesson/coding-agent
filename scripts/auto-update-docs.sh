@@ -16,8 +16,9 @@ if [ -z "$FILE_PATH" ]; then
     exit 0
 fi
 
-# .md 파일 수정은 스킵 (CLAUDE.md, README.md 업데이트 시 재귀 방지)
-if [[ "$FILE_PATH" == *.md ]]; then
+# CLAUDE.md, README.md 업데이트 시 재귀 방지 (SKILL.md는 허용)
+BASENAME=$(basename "$FILE_PATH")
+if [[ "$BASENAME" == "CLAUDE.md" ]] || [[ "$BASENAME" == "README.md" ]]; then
     exit 0
 fi
 
@@ -115,17 +116,9 @@ if [ -f "README.md" ]; then
     fi
 fi
 
-# Git 상태 확인 및 자동 커밋 (git repo인 경우에만)
-if [ -d ".git" ]; then
-    # 변경사항이 있는지 확인
-    if ! git diff --quiet HEAD 2>/dev/null; then
-        # 자동 커밋은 비활성화 (사용자가 명시적으로 요청할 때만)
-        # git add -A
-        # git commit -m "Auto-update: $FILENAME ($DATE)"
-        # git push
-        :
-    fi
-fi
+# Git 자동 커밋 제거됨 (2026-01-23)
+# Claude가 직접 원자적 커밋하는 것이 규칙 (automation.md 참조)
+# Hook은 문서 업데이트만 담당
 
 # 성공적으로 완료
 exit 0
