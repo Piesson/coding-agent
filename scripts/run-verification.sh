@@ -301,6 +301,15 @@ run_verification() {
 # 오류 기록 함수
 log_errors() {
     if [ -n "$ERRORS" ]; then
+        # 파일 크기가 1MB 초과 시 자동 초기화 (무한 증가 방지)
+        if [ -f "$PENDING_FIXES" ] && [ $(wc -c < "$PENDING_FIXES") -gt 1048576 ]; then
+            echo "# Pending Fixes" > "$PENDING_FIXES"
+            echo "" >> "$PENDING_FIXES"
+            echo "이 파일의 오류들을 확인하고 수정해주세요." >> "$PENDING_FIXES"
+            echo "" >> "$PENDING_FIXES"
+            echo "⚠️  pending-fixes.md가 1MB 초과하여 자동 초기화했습니다."
+        fi
+
         # pending-fixes.md 파일이 없으면 헤더 생성
         if [ ! -f "$PENDING_FIXES" ]; then
             echo "# Pending Fixes" > "$PENDING_FIXES"
